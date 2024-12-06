@@ -3,10 +3,22 @@ import Navbar from "../components/common/Navbar";
 import ReceptTypes from "../components/home/ReceptTypes";
 import ItemCard from "../components/home/ItemCard";
 import { useGetRecipeByCategoryQuery } from "../store/api/recipeApi";
+import { useAddFavouriteRecipeMutation } from "../store/api/favouriteApi";
 
 function Home() {
   const [selectedType, setSelectedType] = useState("Pork");
   const { data, isLoading, error } = useGetRecipeByCategoryQuery(selectedType);
+  const [addFavoriteRecipe] = useAddFavouriteRecipeMutation();
+
+  const handleAddFavorite = async (meal) => {
+    try {
+      await addFavoriteRecipe(meal).unwrap();
+      alert(`${meal.strMeal} added to favorites!`);
+    } catch (err) {
+      console.error("Failed to add favorite:", err);
+      alert("Failed to add to favorites.");
+    }
+  };
 
   return (
     <>
@@ -23,7 +35,8 @@ function Home() {
               key={meal.idMeal}
               name={meal.strMeal}
               image={meal.strMealThumb}
-              selectedType={selectedType} 
+              selectedType={selectedType}
+              onAddFavorite={() => handleAddFavorite(meal)}
             />
           ))}
         </div>

@@ -1,6 +1,6 @@
 import React from "react";
 
-function ItemCard({ name, image, selectedType }) {
+function ItemCard({ name, image, selectedType, onAddFavorite }) {
   return (
     <div className="group">
       <div className="bg-black rounded-3xl">
@@ -14,22 +14,12 @@ function ItemCard({ name, image, selectedType }) {
         <div className="flex space-x-3">
           <p className="text-base text-gray-500">{selectedType}</p>
           <span
-            className="material-symbols-outlined text-lg cursor-pointer text-red-500  hover:fill-icon"
+            className="material-symbols-outlined text-lg cursor-pointer text-red-500 transition-colors hover:bg-black"
             title="Add to favorites"
+            onClick={onAddFavorite}
           >
             favorite
           </span>
-          <style>
-            {`
-              .material-symbols-outlined {
-                font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-                transition: font-variation-settings  ease, background-color ;
-              }
-              .material-symbols-outlined:hover {
-                font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-              }
-            `}
-          </style>
         </div>
         <h3 className="text-lg font-semibold">{name}</h3>
       </div>
