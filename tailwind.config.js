@@ -11,6 +11,7 @@ export default {
         "white-snow": "#fefefe",
         "blush-white": "#f9f9f9", 
         "light-pink":"#fef8f8",
+        "dark-bg":"#e9e8e6",
       },
     },
   },
