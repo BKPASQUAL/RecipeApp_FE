@@ -1,16 +1,14 @@
-import { useState } from 'react'
-import './App.css'
+import React from "react";
+import "./App.css";
+import { Route, Routes } from "react-router-dom";
+import Navbar from "./components/common/Navbar";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
-    </>
-  )
+    <Routes>
+      <Route path="/" element={<Navbar />} />
+    </Routes>
+  );
 }
 
-export default App
+export default App;
