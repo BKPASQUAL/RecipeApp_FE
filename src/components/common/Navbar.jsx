@@ -2,8 +2,6 @@ import React from "react";
 import logo from "../../assets/Images/logo.png";
 
 function Navbar() {
-    const [activeComponent, setActiveComponent] = useState("Home"); 
-
 
   return (
     <div className="w-full h-20 bg-white flex flex-row justify-between items-center px-32">
