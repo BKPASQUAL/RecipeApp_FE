@@ -11,7 +11,7 @@ function Home() {
   return (
     <>
       <Navbar />
-      <div className="px-28">
+      <div className="px-32 bg-light-pink">
         <div>
           <ReceptTypes onSelectType={setSelectedType} />
         </div>

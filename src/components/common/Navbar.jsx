@@ -1,18 +1,22 @@
 import React from "react";
+import logo from "../../assets/Images/logo.png";
 
 function Navbar() {
+    const [activeComponent, setActiveComponent] = useState("Home"); 
+
+
   return (
-    <div className="w-full h-20 bg-slate-300 flex flex-row justify-between items-center px-28 ">
-      <div className="flex justify-start ">
-        LOGO
+    <div className="w-full h-20 bg-white flex flex-row justify-between items-center px-32">
+      <div className="flex justify-start">
+        <img src={logo} alt="Logo" className="h-12" />
       </div>
-      <div className="flex flex-row justify-center">
-        <p>HOME</p>
-        <p>FAVOURITE</p>
+      <div className="flex flex-row justify-center space-x-8 text-lg">
+        <p className="cursor-pointer hover:font-semibold transition-all">HOME</p>
+        <p className="cursor-pointer hover:font-semibold  transition-all">FAVOURITE</p>
       </div>
-      <div className="flex justify-end">
-        ICON
-      </div>
+      <span className="material-symbols-outlined transition-all duration-300 hover:font-semibold  text-3xl cursor-pointer">
+        logout
+      </span>
     </div>
   );
 }

@@ -10,6 +10,7 @@ export default {
         "pale-rose": "#f7c5d5", 
         "white-snow": "#fefefe",
         "blush-white": "#f9f9f9", 
+        "light-pink":"#fef8f8",
       },
     },
   },

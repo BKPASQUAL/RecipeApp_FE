@@ -10,7 +10,7 @@ function ItemCard({ name, image, selectedType }) {
           className="w-full object-cover rounded-3xl"
         />
       </div>
-      <div className="h-1/3 p-4">
+      <div className="pt-4 pb-4">
         <p className="text-sm text-gray-500">{selectedType}</p>
         <h3 className="text-lg font-semibold">{name}</h3>
       </div>
