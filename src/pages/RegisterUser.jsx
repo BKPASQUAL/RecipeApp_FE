@@ -1,16 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import TextField from "@mui/material/TextField";
+import Swal from "sweetalert2";
 import logo from "../assets/Images/logo.png";
 import { useAddUserMutation } from "../store/api/userApi";
+import { useNavigate } from "react-router-dom";
 
 const schema = yup.object().shape({
   firstName: yup.string().required("First Name is required"),
   lastName: yup.string().required("Last Name is required"),
   email: yup.string().email("Enter a valid email").required("Email is required"),
-  phone: yup
+  phoneNumber: yup
     .string()
     .matches(/^\d{10}$/, "Phone number must be 10 digits")
     .required("Phone number is required"),
@@ -25,10 +27,14 @@ const schema = yup.object().shape({
 });
 
 function RegisterUser() {
-  const [addUser, { isLoading, isError, isSuccess }] = useAddUserMutation();
+  const [addUser, { isLoading }] = useAddUserMutation();
+  const [errorMessage, setErrorMessage] = useState(null);
+  const navigate = useNavigate();
+
   const {
     handleSubmit,
     control,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
@@ -36,7 +42,7 @@ function RegisterUser() {
       firstName: "",
       lastName: "",
       email: "",
-      phone: "",
+      phoneNumber: "",
       password: "",
       confirmPassword: "",
     },
@@ -46,8 +52,37 @@ function RegisterUser() {
     try {
       const response = await addUser(data).unwrap();
       console.log("User added successfully:", response);
+
+      Swal.fire({
+        icon: "success",
+        title: "Account Created!",
+        timer: 3000,
+        showConfirmButton: false,
+        toast: true,
+        position: "top-end",
+      });
+
+      reset();
+      navigate("/");
+      setErrorMessage(null);
     } catch (error) {
-      console.error("Failed to add user:", error);
+      console.error("Error registering user:", error);
+      setErrorMessage(
+        error?.data?.message ||
+          error?.data?.errors?.[0]?.msg ||
+          "An error occurred. Please try again."
+      );
+
+      // Show error toast notification
+      Swal.fire({
+        icon: "error",
+        title: "Registration Failed",
+        text: errorMessage || "An unexpected error occurred.",
+        timer: 3000,
+        showConfirmButton: false,
+        toast: true,
+        position: "top-end",
+      });
     }
   };
 
@@ -112,8 +147,8 @@ function RegisterUser() {
                     label="Phone"
                     variant="outlined"
                     fullWidth
-                    error={!!errors.phone}
-                    helperText={errors.phone?.message}
+                    error={!!errors.phoneNumber}
+                    helperText={errors.phoneNumber?.message}
                   />
                 )}
               />
@@ -156,11 +191,12 @@ function RegisterUser() {
               {isLoading ? "Submitting..." : "Create Account"}
             </button>
           </form>
-          {isError && <p className="text-red-500 mt-2">Failed to register user.</p>}
-          {isSuccess && <p className="text-green-500 mt-2">User registered successfully!</p>}
+          {errorMessage && (
+            <p className="text-red-500 mt-2">{errorMessage}</p>
+          )}
         </div>
         <div className="text-center text-xs mt-8">
-          Already have an account? Login
+          Already have an account? <a href="/" className="text-blue-500">Login</a>
         </div>
       </div>
     </div>

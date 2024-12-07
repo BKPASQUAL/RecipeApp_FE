@@ -2,8 +2,8 @@ import React from "react";
 
 function ItemCard({ name, image, selectedType, onAddFavorite, onClick, isFavarite }) {
   return (
-    <div className="group" onClick={onClick}>
-      <div className="bg-black rounded-3xl">
+    <div className="group cursor-pointer" onClick={onClick}>
+      <div className="bg-black rounded-3xl ">
         <img
           src={image}
           alt={name}
