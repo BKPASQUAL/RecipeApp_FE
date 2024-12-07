@@ -1,16 +1,14 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { api } from "./api";
 
-export const recipeApi = createApi({
-  reducerPath: "recipeApi", 
-  baseQuery: fetchBaseQuery({
-    baseUrl: 'https://recipeappbe-production-857f.up.railway.app/', 
-  }),
+export const recipeApi = api.injectEndpoints({
+  reducerPath: "recipeApi",
+  
   endpoints: (builder) => ({
     getRecipeByCategory: builder.query({
-      query: (category) => `recipes/category/${category}`, 
+      query: (category) => `recipes/category/${category}`,
     }),
     getRecipeById: builder.query({
-      query: (id) => `recipes/${id}`, 
+      query: (id) => `recipes/${id}`,
     }),
   }),
 });
