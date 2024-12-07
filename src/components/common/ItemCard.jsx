@@ -1,8 +1,8 @@
 import React from "react";
 
-function ItemCard({ name, image, selectedType, onAddFavorite ,isFavarite}) {
+function ItemCard({ name, image, selectedType, onAddFavorite, onClick, isFavarite }) {
   return (
-    <div className="group">
+    <div className="group" onClick={onClick}>
       <div className="bg-black rounded-3xl">
         <img
           src={image}
@@ -16,12 +16,15 @@ function ItemCard({ name, image, selectedType, onAddFavorite ,isFavarite}) {
           <span
             className="material-symbols-outlined text-lg cursor-pointer text-red-500 transition-colors"
             style={
-                isFavarite
-                  ? { color: "red", fontVariationSettings: "'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24" }
-                  : { color: "red", fontVariationSettings: "'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24" }
-              }
+              isFavarite
+                ? { color: "red", fontVariationSettings: "'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24" }
+                : { color: "red", fontVariationSettings: "'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24" }
+            }
             title="Add to favorites"
-            onClick={onAddFavorite}
+            onClick={(e) => {
+              e.stopPropagation(); // Prevent triggering onClick for the card
+              onAddFavorite();
+            }}
           >
             favorite
           </span>
@@ -33,3 +36,5 @@ function ItemCard({ name, image, selectedType, onAddFavorite ,isFavarite}) {
 }
 
 export default ItemCard;
+
+

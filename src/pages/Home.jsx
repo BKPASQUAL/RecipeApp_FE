@@ -4,12 +4,27 @@ import Navbar from "../components/common/Navbar";
 import ReceptTypes from "../components/home/ReceptTypes";
 import ItemCard from "../components/common/ItemCard";
 import { useGetRecipeByCategoryQuery } from "../store/api/recipeApi";
-import { useAddFavouriteRecipeMutation } from "../store/api/favouriteApi";
+import { useAddFavouriteRecipeMutation, useGetFavouriteRecipesQuery } from "../store/api/favouriteApi";
+import ReceptDetails from "../components/Models/ReceptDetals";
 
 function Home() {
   const [selectedType, setSelectedType] = useState("Pork");
+  const [selectedRecipeId, setSelectedRecipeId] = useState(null);
+  const [isModalOpen, setModalOpen] = useState(false);
+
   const { data, isLoading, error } = useGetRecipeByCategoryQuery(selectedType);
   const [addFavoriteRecipe] = useAddFavouriteRecipeMutation();
+  const { refetch } = useGetFavouriteRecipesQuery();
+
+  const handleOpenModal = (recipeId) => {
+    setSelectedRecipeId(recipeId);
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedRecipeId(null);
+    setModalOpen(false);
+  };
 
   const handleAddFavorite = async (meal) => {
     const {
@@ -25,7 +40,7 @@ function Home() {
         recipeCategory: selectedType,
         recipeImgURL,
       });
-
+      refetch()
       const Toast = Swal.mixin({
         toast: true,
         position: "top-end",
@@ -82,10 +97,17 @@ function Home() {
               image={meal.strMealThumb}
               selectedType={selectedType}
               onAddFavorite={() => handleAddFavorite(meal)}
+              onClick={() => handleOpenModal(meal.idMeal)}
             />
           ))}
         </div>
       </div>
+      {isModalOpen && selectedRecipeId && (
+        <ReceptDetails
+          recipeId={selectedRecipeId}
+          onClose={handleCloseModal}
+        />
+      )}
     </>
   );
 }
