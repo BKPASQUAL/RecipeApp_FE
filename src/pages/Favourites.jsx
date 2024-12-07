@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "../components/common/Navbar";
 import {
   useGetFavouriteRecipesQuery,
@@ -6,10 +6,23 @@ import {
 } from "../store/api/favouriteApi";
 import Swal from "sweetalert2";
 import ItemCard from "../components/common/ItemCard";
+import RecipeDetails from "../components/Models/ReceptDetals";
 
 function Favourites() {
   const { data, isLoading, error, refetch } = useGetFavouriteRecipesQuery();
   const [removeFavourites] = useRemoveFavouriteRecipeMutation();
+  const [selectedRecipeId, setSelectedRecipeId] = useState(null);
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const handleOpenModal = (recipeId) => {
+    setSelectedRecipeId(recipeId);
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedRecipeId(null);
+    setModalOpen(false);
+  };
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -63,10 +76,17 @@ function Favourites() {
               selectedType={recipe.recipeCategory}
               isFavarite={true}
               onAddFavorite={() => handleRemoveFavourites(recipe.recipeId)}
+              onClick={() => handleOpenModal(recipe.recipeId)}
             />
           ))}
         </div>
       </div>
+      {isModalOpen && selectedRecipeId && (
+        <RecipeDetails
+          recipeId={selectedRecipeId}
+          onClose={handleCloseModal}
+        />
+      )}
     </>
   );
 }
