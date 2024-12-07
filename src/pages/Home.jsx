@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Swal from "sweetalert2";
 import Navbar from "../components/common/Navbar";
 import ReceptTypes from "../components/home/ReceptTypes";
-import ItemCard from "../components/home/ItemCard";
+import ItemCard from "../components/common/ItemCard";
 import { useGetRecipeByCategoryQuery } from "../store/api/recipeApi";
 import { useAddFavouriteRecipeMutation } from "../store/api/favouriteApi";
 

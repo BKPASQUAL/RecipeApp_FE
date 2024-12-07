@@ -1,6 +1,6 @@
 import React from "react";
 
-function ItemCard({ name, image, selectedType, onAddFavorite }) {
+function ItemCard({ name, image, selectedType, onAddFavorite ,isFavarite}) {
   return (
     <div className="group">
       <div className="bg-black rounded-3xl">
@@ -15,6 +15,11 @@ function ItemCard({ name, image, selectedType, onAddFavorite }) {
           <p className="text-base text-gray-500">{selectedType}</p>
           <span
             className="material-symbols-outlined text-lg cursor-pointer text-red-500 transition-colors"
+            style={
+                isFavarite
+                  ? { color: "red", fontVariationSettings: "'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24" }
+                  : { color: "red", fontVariationSettings: "'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24" }
+              }
             title="Add to favorites"
             onClick={onAddFavorite}
           >
