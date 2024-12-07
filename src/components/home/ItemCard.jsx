@@ -14,7 +14,7 @@ function ItemCard({ name, image, selectedType, onAddFavorite }) {
         <div className="flex space-x-3">
           <p className="text-base text-gray-500">{selectedType}</p>
           <span
-            className="material-symbols-outlined text-lg cursor-pointer text-red-500 transition-colors hover:bg-black"
+            className="material-symbols-outlined text-lg cursor-pointer text-red-500 transition-colors"
             title="Add to favorites"
             onClick={onAddFavorite}
           >

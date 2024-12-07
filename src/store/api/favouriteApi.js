@@ -1,10 +1,7 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { api } from "./api";
 
-export const favouriteApi = createApi({
-  reducerPath: "favouriteApi", 
-  baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:3000/', 
-  }),
+export const favouriteApi = api.injectEndpoints({
+  reducerPath: "favouriteApi",
   endpoints: (builder) => ({
     getFavouriteRecipes: builder.query({
       query: () => "favourites",
