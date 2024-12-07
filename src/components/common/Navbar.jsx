@@ -9,7 +9,7 @@ function Navbar() {
         <img src={logo} alt="Logo" className="h-12" />
       </div>
       <div className="flex flex-row justify-center space-x-8 text-lg">
-        <Link to="/" className="cursor-pointer hover:font-semibold transition-all">
+        <Link to="/home" className="cursor-pointer hover:font-semibold transition-all">
           HOME
         </Link>
         <Link to="/favourites" className="cursor-pointer hover:font-semibold transition-all">
