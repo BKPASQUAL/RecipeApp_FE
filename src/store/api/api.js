@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const api = createApi({
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:3000/",
+    baseUrl: "https://recipeappbe-production-857f.up.railway.app/",
     prepareHeaders: (headers) => {
       const accessToken = localStorage.getItem("accessToken");
       if (accessToken) {

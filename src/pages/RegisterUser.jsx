@@ -46,10 +46,8 @@ function RegisterUser() {
     try {
       const response = await addUser(data).unwrap();
       console.log("User added successfully:", response);
-      // Optionally, handle success (e.g., redirect or show a success message)
     } catch (error) {
       console.error("Failed to add user:", error);
-      // Optionally, handle error (e.g., show an error message)
     }
   };
 
