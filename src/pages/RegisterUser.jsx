@@ -4,15 +4,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import TextField from "@mui/material/TextField";
 import logo from "../assets/Images/logo.png";
+import { useAddUserMutation } from "../store/api/userApi";
 
-// Validation schema
 const schema = yup.object().shape({
   firstName: yup.string().required("First Name is required"),
   lastName: yup.string().required("Last Name is required"),
-  email: yup
-    .string()
-    .email("Enter a valid email")
-    .required("Email is required"),
+  email: yup.string().email("Enter a valid email").required("Email is required"),
   phone: yup
     .string()
     .matches(/^\d{10}$/, "Phone number must be 10 digits")
@@ -28,6 +25,7 @@ const schema = yup.object().shape({
 });
 
 function RegisterUser() {
+  const [addUser, { isLoading, isError, isSuccess }] = useAddUserMutation();
   const {
     handleSubmit,
     control,
@@ -44,8 +42,15 @@ function RegisterUser() {
     },
   });
 
-  const onSubmit = (data) => {
-    console.log("Form Data:", data);
+  const onSubmit = async (data) => {
+    try {
+      const response = await addUser(data).unwrap();
+      console.log("User added successfully:", response);
+      // Optionally, handle success (e.g., redirect or show a success message)
+    } catch (error) {
+      console.error("Failed to add user:", error);
+      // Optionally, handle error (e.g., show an error message)
+    }
   };
 
   return (
@@ -61,7 +66,6 @@ function RegisterUser() {
               <Controller
                 name="firstName"
                 control={control}
-                defaultValue=""
                 render={({ field }) => (
                   <TextField
                     {...field}
@@ -76,7 +80,6 @@ function RegisterUser() {
               <Controller
                 name="lastName"
                 control={control}
-                defaultValue=""
                 render={({ field }) => (
                   <TextField
                     {...field}
@@ -91,7 +94,6 @@ function RegisterUser() {
               <Controller
                 name="email"
                 control={control}
-                defaultValue=""
                 render={({ field }) => (
                   <TextField
                     {...field}
@@ -104,9 +106,8 @@ function RegisterUser() {
                 )}
               />
               <Controller
-                name="phone"
+                name="phoneNumber"
                 control={control}
-                defaultValue=""
                 render={({ field }) => (
                   <TextField
                     {...field}
@@ -121,7 +122,6 @@ function RegisterUser() {
               <Controller
                 name="password"
                 control={control}
-                defaultValue=""
                 render={({ field }) => (
                   <TextField
                     {...field}
@@ -137,7 +137,6 @@ function RegisterUser() {
               <Controller
                 name="confirmPassword"
                 control={control}
-                defaultValue=""
                 render={({ field }) => (
                   <TextField
                     {...field}
@@ -153,11 +152,14 @@ function RegisterUser() {
             </div>
             <button
               type="submit"
+              disabled={isLoading}
               className="bg-rose-pink h-9 w-36 rounded-md hover:bg-dark-pink text-white transition-all duration-300 mt-6"
             >
-              Create Account
+              {isLoading ? "Submitting..." : "Create Account"}
             </button>
           </form>
+          {isError && <p className="text-red-500 mt-2">Failed to register user.</p>}
+          {isSuccess && <p className="text-green-500 mt-2">User registered successfully!</p>}
         </div>
         <div className="text-center text-xs mt-8">
           Already have an account? Login
